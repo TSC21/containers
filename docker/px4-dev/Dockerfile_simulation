@@ -9,29 +9,17 @@ RUN wget --quiet http://packages.osrfoundation.org/gazebo.key -O - | apt-key add
 	&& sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable xenial main" > /etc/apt/sources.list.d/gazebo-stable.list' \
 	&& apt-get update \
 	&& apt-get -y --quiet --no-install-recommends install \
-		ant \
 		gazebo7 \
 		gstreamer1.0-plugins-base \
 		libeigen3-dev \
 		libgazebo7-dev \
 		libopencv-dev \
-		openjdk-8-jdk \
 		pkg-config \
-		protobuf-compiler \
-		python-dev \
-		python-numpy \
+		protobuf-compiler
 	&& apt-get -y autoremove \
 	&& apt-get clean autoclean \
 	# px4tools
 	&& pip install px4tools \
-	# dronekit latest
-	&& git clone https://github.com/dronekit/dronekit-python.git \
-	&& (cd dronekit-python && pip install -r requirements.txt) && rm -rf dronekit-python \
-	# pymavlink latest
-	&& git clone https://github.com/ArduPilot/pymavlink.git \
-	&& cd pymavlink \
-	&& git clone git://github.com/mavlink/mavlink.git && ln -s $PWD/mavlink/message_definitions ../ \
-	&& pip install . && cd .. && rm -rf pymavlink && rm -rf message_definitions \
 	# cleanup
 	&& rm -rf /var/lib/apt/lists/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
 
@@ -45,3 +33,4 @@ ENV SVGA_VGPU10 0
 
 # Use UTF8 encoding in java tools (needed to compile jMAVSim)
 ENV JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
+
