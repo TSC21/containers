@@ -9,13 +9,14 @@ RUN wget --quiet http://packages.osrfoundation.org/gazebo.key -O - | apt-key add
 	&& sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable xenial main" > /etc/apt/sources.list.d/gazebo-stable.list' \
 	&& apt-get update \
 	&& apt-get -y --quiet --no-install-recommends install \
+		ant \
 		gazebo7 \
 		gstreamer1.0-plugins-base \
 		libeigen3-dev \
 		libgazebo7-dev \
 		libopencv-dev \
 		pkg-config \
-		protobuf-compiler
+		protobuf-compiler \
 	&& apt-get -y autoremove \
 	&& apt-get clean autoclean \
 	# px4tools
@@ -33,4 +34,3 @@ ENV SVGA_VGPU10 0
 
 # Use UTF8 encoding in java tools (needed to compile jMAVSim)
 ENV JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
-

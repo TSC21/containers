@@ -10,12 +10,18 @@ RUN apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C3
 	&& sh -c 'echo "deb http://packages.ros.org/ros-shadow-fixed/ubuntu/ xenial main" > /etc/apt/sources.list.d/ros-shadow.list' \
 	&& apt-get update \
 	&& apt-get -y --quiet --no-install-recommends install \
+		python-tk \
 		ros-kinetic-gazebo-ros-pkgs \
 		ros-kinetic-mavros \
 		ros-kinetic-mavros-extras \
 		ros-kinetic-ros-base \
 	&& apt-get -y autoremove \
 	&& apt-get clean autoclean \
+	# pip
+	&& pip install matplotlib numpy \
 	&& rm -rf /var/lib/apt/lists/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
+
+# TODO: wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
+# sudo bash install_geographiclib_datasets.sh
 
 RUN rosdep init && rosdep update
